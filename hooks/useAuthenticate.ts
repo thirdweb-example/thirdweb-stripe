@@ -1,10 +1,11 @@
-import { useAddress } from "@thirdweb-dev/react";
-import { AuthorizedPayload } from "@thirdweb-dev/sdk/dist/src/schema";
+import { useAddress, useSDK } from "@thirdweb-dev/react";
+import { AuthenticatedPayload, AuthorizedPayload } from "@thirdweb-dev/sdk/dist/src/schema";
 
 export default function useAuthenticate() {
   const address = useAddress();
+  const sdk = useSDK();
 
-  async function authenticate(): Promise<AuthorizedPayload> {
+  async function authenticate(): Promise<AuthenticatedPayload> {
     const res = await fetch("/api/authenticate", {
       method: "POST",
       headers: {
@@ -13,9 +14,10 @@ export default function useAuthenticate() {
       body: JSON.stringify({ subject: address }),
     })
     const data = await res.json() as AuthorizedPayload;
-    window.localStorage.setItem("thirdweb:authentication", JSON.stringify(data));
+    const authenticatedPayload = await sdk?.auth.sign(data);
+    window.localStorage.setItem("thirdweb:authentication", JSON.stringify(authenticatedPayload));
 
-    return data;
+    return authenticatedPayload as AuthenticatedPayload;
   }
 
   async function verify(): Promise<boolean> {

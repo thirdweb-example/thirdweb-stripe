@@ -17,12 +17,14 @@ const verify = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
-  
+
   const { payload } = req.body;
   const authenticatedPayload: AuthenticatedPayload = payload;
 
   const application = "thirdweb-sign-in-with-ethereum-backend"
   const isValid = await sdk.auth.verify(application, authenticatedPayload);
+
+  console.log(isValid)
 
   return res.status(200).json(isValid);
 };

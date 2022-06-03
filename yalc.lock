@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@thirdweb-dev/sdk": {
-      "signature": "65720267f3ac488e882f531c3671819e",
+      "signature": "4e53ffb6c297a08e4b5e07d4d361c609",
       "file": true,
       "replaced": "^2"
     }
