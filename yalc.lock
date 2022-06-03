@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "@thirdweb-dev/sdk": {
+      "signature": "65720267f3ac488e882f531c3671819e",
+      "file": true,
+      "replaced": "^2"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "name": "@thirdweb-dev/sdk",
+  "version": "2.3.8-0",
+  "description": "The main thirdweb SDK.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thirdweb-dev/typescript-sdk.git"
+  },
+  "license": "Apache-2.0",
+  "types": "dist/src/index.d.ts",
+  "main": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
+  "browser": "dist/browser/index.js",
+  "unpkg": "dist/browser/index.global.js",
+  "exports": {
+    "node": {
+      "import": "./dist/node/index.mjs",
+      "module": "./dist/node/index.mjs",
+      "require": "./dist/node/index.js"
+    },
+    "default": "./dist/browser/index.mjs"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf dist/",
+    "dev": "tsdx watch",
+    "build:lib": "rm -rf ./dist && tsup && yarn generate-types",
+    "format": "prettier src/ --write",
+    "prepublishOnly": "yarn lint && yarn build",
+    "lint": "eslint src/",
+    "fix": "eslint src/ --fix",
+    "generate-types": "tsc",
+    "typechain": "rm -rf ./typechain && typechain --target ethers-v5 --out-dir typechain './node_modules/@thirdweb-dev/contracts/abi/*.json'",
+    "extract-abi": "node ./scripts/extract-abis.mjs",
+    "extract-api": "api-extractor run --local",
+    "full-build": "yarn typechain && yarn extract-abi && yarn build:lib && yarn extract-api",
+    "generate-md-docs": "yarn api-documenter markdown -i ./temp -o ./docs",
+    "generate-docs": "yarn full-build && yarn generate-md-docs",
+    "generate-snippets": "node ./scripts/generate-snippets.mjs && node ./scripts/generate-feature-snippets.mjs",
+    "build": "yarn clean && yarn generate-docs && yarn generate-snippets",
+    "test": "echo \"\nUse 'yarn run test:all' to run all tests\nPass a test file pattern from ./test to run\n\n\t$ yarn run test test/pack.test.ts\" && ts-mocha --paths -t 120000 -r esm -p tsconfig.testing.json",
+    "test:all": "ts-mocha --parallel --paths -t 120000 -r esm -p tsconfig.testing.json './test/**/*.test.ts'"
+  },
+  "peerDependencies": {
+    "ethers": "^5"
+  },
+  "dependencies": {
+    "@thirdweb-dev/contracts": "2.3.9",
+    "@web-std/file": "^3.0.0",
+    "cbor": "^8.1.0",
+    "cross-fetch": "^3.1.5",
+    "eventemitter3": "^4.0.7",
+    "fast-deep-equal": "^3.1.3",
+    "form-data": "^4.0.0",
+    "multihashes": "^4.0.3",
+    "tiny-invariant": "^1.2.0",
+    "uuid": "^8.3.2",
+    "zod": "^3.11.6"
+  },
+  "resolutions": {
+    "nanoid": "^3.1.31",
+    "typescript": "^4.6.2",
+    "@microsoft/tsdoc": "^0.14.1"
+  },
+  "bugs": {
+    "url": "https://github.com/thirdweb-dev/typescript-sdk/issues"
+  },
+  "homepage": "https://github.com/thirdweb-dev/typescript-sdk#readme",
+  "author": "thirdweb",
+  "yalcSig": "65720267f3ac488e882f531c3671819e"
+}
