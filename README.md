@@ -1,6 +1,13 @@
-## Getting Started
+## Sign In With Ethereum
 
-First, intall the required dependencies:
+This project demonstrates an example flow for setting up an authentication flow using the
+[sign-in with ethereum](https://eips.ethereum.org/EIPS/eip-4361) spec via the thirdweb SDK.
+
+It implements a backend endpoint with an admin wallet to generate and verify signatures as a form of authentication, and a react frontend to enable a user on the client side to connect and authenticate with their wallet.
+
+## Setup
+
+To run the project, first clone this repository, and then run one of the following commands to install the dependencies:
 
 ```bash
 npm install
@@ -8,7 +15,13 @@ npm install
 yarn install
 ```
 
-Then, run the development server:
+Next, you need to create a `.env.local` file and add the `ADMIN_PRIVATE_KEY` variable to it with the private key of the wallet you want to use as the admin wallet to generate and verify payloads. Your file should use something like the following:
+
+```.env
+ADMIN_PRIVATE_KEY=...
+```
+
+Finally, you can run the project with one of the following commands:
 
 ```bash
 npm run dev
@@ -16,13 +29,7 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-On `pages/_app.tsx`, you'll find our `ThirdwebProvider` wrapping your app, this is necessary for our hooks to work.
-
-on `pages/index.tsx`, you'll find the `useMetamask` hook that we use to connect the user's wallet to MetaMask, `useDisconnect` that we use to disconnect it, and `useAddress` to check the user's wallet address once connected. 
+Now, you can navigate to [http://localhost:3000](http://localhost:3000) to visit the client side page where you can connect a wallet, sign-in with ethereum and view the payload, and use the payload to authenticate with the backend.
 
 ## Learn More
 

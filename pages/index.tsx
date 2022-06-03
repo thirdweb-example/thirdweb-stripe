@@ -41,7 +41,11 @@ const Home: NextPage = () => {
             </>
           )}
           {isValid !== undefined && (
-            <p>Valid Authentication: {isValid.toString()}</p>
+            <>
+              <strong>Valid Authentication:</strong>
+              <p>This indicates whether the server accepted this payload for authentication</p>
+              <p>{isValid.toString()}</p>
+            </>
           )}
         </>
       ) : (
