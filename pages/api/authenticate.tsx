@@ -11,6 +11,7 @@ const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const PRIVATE_KEY = process.env.ADMIN_PRIVATE_KEY;
   if (!PRIVATE_KEY) {
+    console.error("Missing ADMIN_PRIVATE_KEY environment variable");
     return res.status(500).json({ 
       error: "Admin private key not set" 
     })
