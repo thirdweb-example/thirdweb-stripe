@@ -1,42 +1,36 @@
-import { useAddress, useSDK } from "@thirdweb-dev/react";
-import { AuthenticatedPayload, AuthorizedPayload } from "@thirdweb-dev/sdk/dist/src/schema";
+import { useSDK } from "@thirdweb-dev/react";
 
 export default function useAuthenticate() {
-  const address = useAddress();
+  const domain = "thirdweb.com";
   const sdk = useSDK();
 
-  async function authenticate(): Promise<AuthenticatedPayload> {
-    const res = await fetch("/api/authenticate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ subject: address }),
-    })
-    const data = await res.json() as AuthorizedPayload;
-    const authenticatedPayload = await sdk?.auth.sign(data);
-    window.localStorage.setItem("thirdweb:authentication", JSON.stringify(authenticatedPayload));
-
-    return authenticatedPayload as AuthenticatedPayload;
-  }
-
-  async function verify(): Promise<boolean> {
-    const payload = JSON.parse(
-      window.localStorage.getItem("thirdweb:authentication") as string
-    );
-    const res = await fetch("/api/verify", {
+  async function login() {
+    const payload = await sdk?.auth.login(domain);
+    await fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ payload }),
     })
-    const data = await res.json();
-    return data as boolean;
   }
 
-  return {
+  async function authenticate() {
+    const res = await fetch("/api/authenticate", {
+      method: "POST"
+    })
+    return res
+  }
+
+  async function logout() {
+    await fetch("/api/logout", {
+      method: "POST",
+    })
+  }
+
+  return { 
+    login,
     authenticate,
-    verify,
+    logout
   }
 }

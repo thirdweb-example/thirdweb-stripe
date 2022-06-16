@@ -1,5 +1,4 @@
 import { ThirdwebSDK } from "@thirdweb-dev/sdk";
-import { ethers } from "ethers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,22 +16,21 @@ const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
     })
   }
 
-  const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
-  
-  const { subject } = req.body;
-  if (!ethers.utils.isAddress(subject)) {
-    return res.status(400).json({ 
-      error: "Must provide a valid address as the subject" 
+  // Get access token off cookies
+  const token = req.cookies.access_token;
+  if (!token) {
+    res.status(401).json({
+      error: "Must provide an access token to authenticate"
     })
-  }  
+  }
 
-  const application = "thirdweb-sign-in-with-ethereum-backend"
-  const authorizedPayload = await sdk.auth.generate({
-    application,
-    subject,
-  })
+  const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
 
-  return res.status(200).json(authorizedPayload)
+  // Authenticate token with the SDK
+  const domain = "thirdweb.com"
+  const address = await sdk.auth.authenticate(domain, token);
+
+  res.status(200).json(address);
 };
 
 export default authenticate;
