@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@thirdweb-dev/react": "^2",
-    "@thirdweb-dev/sdk": "file:.yalc/@thirdweb-dev/sdk",
+    "@thirdweb-dev/sdk": "^2.3.15-1",
     "cookie": "^0.5.0",
     "ethers": "^5.6.8",
     "next": "^12.1.6",

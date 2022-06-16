@@ -747,8 +747,10 @@
     tiny-invariant "^1.2.0"
     wagmi "^0.2.28"
 
-"@thirdweb-dev/sdk@file:.yalc/@thirdweb-dev/sdk":
-  version "2.3.14"
+"@thirdweb-dev/sdk@^2.3.15-1":
+  version "2.3.15-1"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/sdk/-/sdk-2.3.15-1.tgz#1649bbb6a0d77be5a63a55b7edd41fd4a7f34d6c"
+  integrity sha512-kKSWBXA4CdGVSr9RzSSWA6Tfjhl1VKfmRfeee02A+BFEppRkSIJ9Tl+edANh8kMqqDbUECSh9dlZtRBx9jlong==
   dependencies:
     "@thirdweb-dev/contracts" "2.3.15-0"
     "@web-std/file" "^3.0.0"
