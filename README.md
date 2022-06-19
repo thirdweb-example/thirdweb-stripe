@@ -1,9 +1,6 @@
-## Sign In With Ethereum
+## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up an authentication flow using the
-[sign-in with ethereum](https://eips.ethereum.org/EIPS/eip-4361) spec via the thirdweb SDK.
-
-It implements a backend endpoint with an admin wallet to generate and verify signatures as a form of authentication, and a react frontend to enable a user on the client side to connect and authenticate with their wallet.
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb authentication and stripe.
 
 ## Setup
 
@@ -21,6 +18,13 @@ Next, you need to create a `.env.local` file and add the `ADMIN_PRIVATE_KEY` var
 ADMIN_PRIVATE_KEY=...
 ```
 
+Additionally, you should create your own [Stripe](https://stripe.com) test project and get your `Stripe Secret Key` from the Stripe dashboard. From here, you can paste the secret key into the `.env` file as well:
+
+```.env
+ADMIN_PRIVATE_KEY=...
+STRIPE_SECRET_KEY=...
+```
+
 Finally, you can run the project with one of the following commands:
 
 ```bash
@@ -29,7 +33,7 @@ npm run dev
 yarn dev
 ```
 
-Now, you can navigate to [http://localhost:3000](http://localhost:3000) to visit the client side page where you can connect a wallet, sign-in with ethereum and view the payload, and use the payload to authenticate with the backend.
+Now, you can navigate to [http://localhost:3000](http://localhost:3000) to visit the client side page where you can connect a wallet, authenticate, and subscribe.
 
 ## Learn More
 
