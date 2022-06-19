@@ -70,7 +70,7 @@ const Home: NextPage = () => {
 
       <h2>Payments - Stripe</h2>
 
-      <button onClick={checkout}>Checkout</button>
+      <button onClick={checkout}>Subscribe</button>
     </div>
   );
 };

@@ -17,33 +17,51 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     })
   }
 
-  // Get access token off cookies
   const token = req.cookies.access_token;
-  console.log(">>> TOKEN")
-  console.log(token)
   if (!token) {
     return res.status(401).json({
       error: "Must be logged in to create a checkout session"
     })
   }
 
+  // Check that user is authenticated and get their wallet address
   const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
-
-  // Authenticate token with the SDK
-  const domain = "thirdweb.com"
-  const address = await sdk.auth.authenticate(domain, token);
+  const userAddress = await sdk.auth.authenticate("thirdweb.com", token);
 
   const stripe = new Stripe(STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27",
   });
 
-  const sessionId = await stripe.checkout.sessions.create({
+
+  console.log(`metadata["walletAddress"]:"${userAddress}"`)
+  const customers = await stripe.customers.search({
+    query: `metadata["walletAddress"]:"${userAddress}"`
+  })
+
+  console.log(customers);
+
+  let customer;
+  if (customers.data.length > 0) {
+    customer = customers.data[0];
+  } else {
+    customer = await stripe.customers.create({
+      metadata: {
+        walletAddress: userAddress,
+      },
+    })
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    customer: customer.id,
     success_url: "http://localhost:3000",
+    line_items: [
+      { price: process.env.STRIPE_PRICE_ID, quantity: 1, }
+    ],
     cancel_url: "http://localhost:3000",
     mode: "subscription",
   })
 
-  return res.status(200).json(sessionId);
+  return res.status(200).json(session);
 };
 
 export default checkout;
