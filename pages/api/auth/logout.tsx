@@ -10,13 +10,11 @@ const logout = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // Set the access token to 'none' and expire in 5 seconds
   res.setHeader("Set-Cookie", serialize("access_token", 'none', {
+    path: "/",
     expires: new Date(Date.now() + 5 * 1000),
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
   }));
 
-  res.status(200).json("Successfully logged out.");
+  return res.status(200).json("Successfully logged out.");
 };
 
 export default logout;

@@ -33,13 +33,15 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
   const token = await sdk.auth.generate(domain, payload);
 
   // Securely set httpOnly cookie on request to prevent XSS on frontend
+  // And set path to / to enable access_token usage on all endpoints
   res.setHeader("Set-Cookie", serialize("access_token", token, {
+    path: "/",
     httpOnly: true,
     secure: true,
     sameSite: "strict",
   }));
 
-  res.status(200).json("Successfully logged in.");
+  return res.status(200).json("Successfully logged in.");
 };
 
 export default login;

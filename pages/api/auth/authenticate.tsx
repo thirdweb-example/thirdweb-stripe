@@ -19,7 +19,7 @@ const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
   // Get access token off cookies
   const token = req.cookies.access_token;
   if (!token) {
-    res.status(401).json({
+    return res.status(401).json({
       error: "Must provide an access token to authenticate"
     })
   }
@@ -30,7 +30,7 @@ const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
   const domain = "thirdweb.com"
   const address = await sdk.auth.authenticate(domain, token);
 
-  res.status(200).json(address);
+  return res.status(200).json(address);
 };
 
 export default authenticate;
