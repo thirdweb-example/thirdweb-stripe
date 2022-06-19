@@ -19,7 +19,16 @@ export default function useStripe() {
     })
   }
 
+  async function subscription() {
+    const res = await fetch("/api/stripe/subscription", {
+      method: "POST",
+    });
+    const subscriptionMessage = await res.json();
+    return subscriptionMessage;
+  }
+
   return {
-    checkout
+    checkout,
+    subscription
   }
 }

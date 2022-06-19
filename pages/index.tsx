@@ -10,11 +10,12 @@ const Home: NextPage = () => {
   const address = useAddress();
   const disconnect = useDisconnect();
   const connectWithMetamask = useMetamask();
-  const { checkout } = useStripe();
+  const { checkout, subscription } = useStripe();
   const { login, authenticate, logout } = useAuthenticate();
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authMessage, setAuthMessage] = useState("N/A");
+  const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
 
   const signInWithEthereum = async () => {
     setAuthMessage("N/A");
@@ -31,6 +32,11 @@ const Home: NextPage = () => {
     } else {
       setAuthMessage(`Failed to authenticate, backend responded with ${res.status} (${res.statusText})`);
     }
+  }
+
+  const checkSubscription = async () => {
+    const message = await subscription();
+    setSubscriptionMessage(message);
   }
 
   const logoutWallet = async () => {
@@ -71,6 +77,9 @@ const Home: NextPage = () => {
       <h2>Payments - Stripe</h2>
 
       <button onClick={checkout}>Subscribe</button>
+      <button onClick={checkSubscription}>Check Subscription</button>
+
+      <p>Subscription: {subscriptionMessage}</p>
     </div>
   );
 };

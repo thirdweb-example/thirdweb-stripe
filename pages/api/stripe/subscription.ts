@@ -2,7 +2,7 @@ import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 
-const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
+const subscription = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
     return res.status(400).json({ 
       error: "Invalid method. Only POST supported." 
@@ -32,37 +32,30 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     apiVersion: "2020-08-27",
   });
 
-
-  // Check for stripe customers already associated with authenticated wallet address
+  // Find associated stripe customer with user wallet
   const customers = await stripe.customers.search({
     query: `metadata["walletAddress"]:"${userAddress}"`
   })
 
-  let customer;
-  if (customers.data.length > 0) {
-    // If there is already a customer for this wallet, use it
-    customer = customers.data[0];
-  } else {
-    // Otherwise create a new customer associated with this wallet
-    customer = await stripe.customers.create({
-      metadata: {
-        walletAddress: userAddress,
-      },
-    })
+  if (customers.data.length === 0) {
+    // If there is no customer, then we know there is no subscription
+    return res.status(200).json(`User ${userAddress} has no subscription.`);
   }
 
-  // Finally, create a new checkout session for the customer to send to the client-side
-  const session = await stripe.checkout.sessions.create({
+  // If there is a customer, then we can check if they have a subscription
+  const customer = customers.data[0];
+  const subscriptions = await stripe.subscriptions.list({
     customer: customer.id,
-    success_url: "http://localhost:3000",
-    line_items: [
-      { price: process.env.STRIPE_PRICE_ID, quantity: 1, }
-    ],
-    cancel_url: "http://localhost:3000",
-    mode: "subscription",
   })
 
-  return res.status(200).json(session);
-};
+  if (subscriptions?.data.length === 0) {
+    // If there is no subscription, return
+    return res.status(200).json(`User ${userAddress} has no subscription.`);
+  }
 
-export default checkout;
+  // If there is a subscription, return the subscription ID
+  return res.status(200).json(`User ${userAddress} has subscription with ID ${subscriptions?.data[0].id}`);
+
+}
+
+export default subscription;
