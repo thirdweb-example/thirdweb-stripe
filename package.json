@@ -15,7 +15,8 @@
     "ethers": "^5.6.8",
     "next": "^12.1.6",
     "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.1.0",
+    "stripe": "^9.9.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",

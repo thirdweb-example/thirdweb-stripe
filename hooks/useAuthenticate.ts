@@ -6,7 +6,7 @@ export default function useAuthenticate() {
 
   async function login() {
     const payload = await sdk?.auth.login(domain);
-    await fetch("/api/login", {
+    await fetch("/api/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -16,14 +16,14 @@ export default function useAuthenticate() {
   }
 
   async function authenticate() {
-    const res = await fetch("/api/authenticate", {
+    const res = await fetch("/api/auth/authenticate", {
       method: "POST"
     })
     return res
   }
 
   async function logout() {
-    await fetch("/api/logout", {
+    await fetch("/api/auth/logout", {
       method: "POST",
     })
   }

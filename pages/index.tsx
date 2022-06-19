@@ -3,12 +3,14 @@ import type { NextPage } from 'next';
 import useAuthenticate from '../hooks/useAuthenticate';
 import { useAddress, useDisconnect, useMetamask } from '@thirdweb-dev/react';
 import { useState } from "react";
+import useStripe from '../hooks/useStripe';
 
 
 const Home: NextPage = () => {
   const address = useAddress();
   const disconnect = useDisconnect();
   const connectWithMetamask = useMetamask();
+  const { checkout } = useStripe();
   const { login, authenticate, logout } = useAuthenticate();
   
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -66,6 +68,9 @@ const Home: NextPage = () => {
         <>Connect your wallet to access authentication.</>
       )}
 
+      <h2>Payments - Stripe</h2>
+
+      <button onClick={checkout}>Checkout</button>
     </div>
   );
 };
