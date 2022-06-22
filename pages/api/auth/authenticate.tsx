@@ -26,8 +26,13 @@ const authenticate = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
 
+  const domain = process.env.NEXT_PUBLIC_AUTH_DOMAIN
+  if (!domain) {
+    console.log("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable");
+    return res.status(500).send("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable")
+  }
+
   // Authenticate token with the SDK
-  const domain = "thirdweb.com"
   const address = await sdk.auth.authenticate(domain, token);
 
   return res.status(200).json(address);

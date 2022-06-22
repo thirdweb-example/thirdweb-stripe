@@ -1,8 +1,18 @@
 ## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb authentication and stripe.
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb wallet authentication and stripe. We use wallet authentication to let users securely authenticate their wallets to the backend, where the backend can verify their wallet addresses. From here, the backend cann generate a new Stripe customer and checkout for the client-side wallet which they can use to pay for a subscription associated with their wallet address. Afterwards, the user can authenticate to the backend where their subscription can be verified and the backend can offer access to any additional gated functionality.
 
-## Setup Thirdweb
+Below is a visual breakdown and explanation of how the whole flow works:
+
+![Subscription Diagram](public/stripe.png)
+
+This is an example of the power that the wallet authentication flow offers for web3 apps as it allows any web3 application to use any web2 service without any added dependency on third party services.
+
+## Runnning the Example
+
+In order to run this example project, we'll need to setup a few pieces. First, we'll need to store environment variables for the admin wallet to use for authentication on the backend (to learn more about how wallet authentication works, you can checkout the [Wallet Authentication Documentation](https://https://portal.thirdweb.com/advanced-features/wallet-authentication)). Additionally, we'll need to setup a Stripe account and configure a product on the Stripe dashboard to use for our subscription.
+
+### Setup Thirdweb
 
 To run the project, first clone this repository, and then run one of the following commands to install the dependencies:
 
@@ -18,6 +28,12 @@ Next, you need to create a `.env.local` file and add the `ADMIN_PRIVATE_KEY` var
 ADMIN_PRIVATE_KEY=...
 ```
 
+Since we are using the `thirdweb authentication` flow, we'll also need to specify a domain in our environment variables for both our client and server sides to use. This domain should be the url of your client side application and is used to prevent phishing attacks. We can add it to the `NEXT_PUBLIC_AUTH_DOMAIN` variable in our `.env.local` file.
+
+```.env
+NEXT_PUBLIC_AUTH_DOMAIN=...
+```
+
 Finally, you can run the project with one of the following commands:
 
 ```bash
@@ -28,7 +44,7 @@ yarn dev
 
 Now, you can navigate to [http://localhost:3000](http://localhost:3000) to visit the client side page where you can connect a wallet and authenticate.
 
-## Setup Stripe
+### Setup Stripe
 
 Now that we've setup our thirdweb app with authentication, we need to setup Stripe to handle payments.
 
@@ -59,10 +75,19 @@ STRIPE_PRICE_ID=...
 
 Now everything we need is setup to use our application. We can run `yarn dev` or `npm run dev` to start the application and then navigate to `localhost:300`. From here, we can connect our wallet, login, and then click the subcribe button to subscribe to our product and go through stripes flow. Once we are redirected back to the original page, we can verify that the subscription was created successfully by clicking the check subcription button, and the subscription should also show up in the Stripe dashboard.
 
-## Learn More
+## Browse the Source Code
+
+As previously mentioned, this project uses `wallet authentication` along with Stripe to enable subscriptions to web3 apps. All the important code in this project is fully documented to help you understand how it works. The following are the relevant files for each piece of the flow to help you understand everything:
+
+- [`/pages/api/auth`](/tree/main/api/auth) - **Wallet Authentication** - This folder contains all the code used for authenticating a wallet to the backend. Users can login to the backend by using the `/api/auth/login` endpoint which verifies their wallet address and issues a secure cookie to the frontend which is used to authenticate the user on all future requests. Every other endpoint checks for and validates this cookie to make sure that the user is logged in.
+- [`/pages/api/stripe`](/tree/main/api/stripe) - **Stripe Payments** - This folder contains the backend endpoints that authenticate the connected user, create a new Stripe customer with the associated wallet address, and generate a Stripe checkout link to send to the frontend, as well as the endpoint that verifies if a user is subscribed.
+- [`/hooks/](/tree/main/hooks) - **Frontend Hooks** - Here you'll find the frontend hooks handling the requests made to the backend for authentication and for using Stripe checkout.
+
+### Learn More
 
 To learn more about thirdweb and Next.js, take a look at the following resources:
 
+- [thirdweb Wallet Authentication](https://https://portal.thirdweb.com/advanced-features/wallet-authentication)
 - [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
 - [thirdweb TypeScript Documentation](https://docs.thirdweb.com/typescript) - learn about our JavaScript/TypeScript SDK.
 - [thirdweb Portal](https://docs.thirdweb.com) - check our guides and development resources.

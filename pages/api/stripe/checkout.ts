@@ -24,9 +24,15 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     })
   }
 
+  const domain = process.env.NEXT_PUBLIC_AUTH_DOMAIN
+  if (!domain) {
+    console.log("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable");
+    return res.status(500).send("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable")
+  }
+
   // Check that user is authenticated and get their wallet address
   const sdk = ThirdwebSDK.fromPrivateKey(process.env.ADMIN_PRIVATE_KEY as string, "mainnet");
-  const userAddress = await sdk.auth.authenticate("thirdweb.com", token);
+  const userAddress = await sdk.auth.authenticate(domain, token);
 
   const stripe = new Stripe(STRIPE_SECRET_KEY, {
     apiVersion: "2020-08-27",
