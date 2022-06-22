@@ -1,6 +1,6 @@
 ## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [wallet authentication](https://https://portal.thirdweb.com/advanced-features/wallet-authentication) and [Stripe](https://stripe.com). 
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [wallet authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication) and [Stripe](https://stripe.com). 
 
 It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access. 
 
@@ -12,7 +12,7 @@ This is an example of the power that the wallet authentication flow offers for w
 
 ## Runnning the Example
 
-In order to run this example project, we'll need to setup a few pieces. First, we'll need to store environment variables for the admin wallet to use for authentication on the backend (to learn more about how wallet authentication works, you can checkout the [Wallet Authentication Documentation](https://https://portal.thirdweb.com/advanced-features/wallet-authentication)). Additionally, we'll need to setup a Stripe account and configure a product on the Stripe dashboard to use for our subscription.
+In order to run this example project, we'll need to setup a few pieces. First, we'll need to store environment variables for the admin wallet to use for authentication on the backend (to learn more about how wallet authentication works, you can checkout the [Wallet Authentication Documentation](https://portal.thirdweb.com/advanced-features/wallet-authentication)). Additionally, we'll need to setup a Stripe account and configure a product on the Stripe dashboard to use for our subscription.
 
 ### Setup Thirdweb
 
@@ -89,7 +89,7 @@ As previously mentioned, this project uses `wallet authentication` along with St
 
 To learn more about thirdweb and Next.js, take a look at the following resources:
 
-- [thirdweb Wallet Authentication](https://https://portal.thirdweb.com/advanced-features/wallet-authentication)
+- [thirdweb Wallet Authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication)
 - [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
 - [thirdweb TypeScript Documentation](https://docs.thirdweb.com/typescript) - learn about our JavaScript/TypeScript SDK.
 - [thirdweb Portal](https://docs.thirdweb.com) - check our guides and development resources.
