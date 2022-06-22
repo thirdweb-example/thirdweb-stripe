@@ -1,6 +1,8 @@
 ## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb wallet authentication and stripe. We use wallet authentication to let users securely authenticate their wallets to the backend, where the backend can verify their wallet addresses. From here, the backend cann generate a new Stripe customer and checkout for the client-side wallet which they can use to pay for a subscription associated with their wallet address. Afterwards, the user can authenticate to the backend where their subscription can be verified and the backend can offer access to any additional gated functionality.
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb wallet authentication and stripe. 
+
+It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access. 
 
 Below is a visual breakdown and explanation of how the whole flow works:
 
@@ -79,9 +81,9 @@ Now everything we need is setup to use our application. We can run `yarn dev` or
 
 As previously mentioned, this project uses `wallet authentication` along with Stripe to enable subscriptions to web3 apps. All the important code in this project is fully documented to help you understand how it works. The following are the relevant files for each piece of the flow to help you understand everything:
 
-- [`/pages/api/auth`](/tree/main/api/auth) - **Wallet Authentication** - This folder contains all the code used for authenticating a wallet to the backend. Users can login to the backend by using the `/api/auth/login` endpoint which verifies their wallet address and issues a secure cookie to the frontend which is used to authenticate the user on all future requests. Every other endpoint checks for and validates this cookie to make sure that the user is logged in.
-- [`/pages/api/stripe`](/tree/main/api/stripe) - **Stripe Payments** - This folder contains the backend endpoints that authenticate the connected user, create a new Stripe customer with the associated wallet address, and generate a Stripe checkout link to send to the frontend, as well as the endpoint that verifies if a user is subscribed.
-- [`/hooks/](/tree/main/hooks) - **Frontend Hooks** - Here you'll find the frontend hooks handling the requests made to the backend for authentication and for using Stripe checkout.
+- [`/pages/api/auth`](/api/auth) - **Wallet Authentication** - This folder contains all the code used for authenticating a wallet to the backend. Users can login to the backend by using the `/api/auth/login` endpoint which verifies their wallet address and issues a secure cookie to the frontend which is used to authenticate the user on all future requests. Every other endpoint checks for and validates this cookie to make sure that the user is logged in.
+- [`/pages/api/stripe`](/api/stripe) - **Stripe Payments** - This folder contains the backend endpoints that authenticate the connected user, create a new Stripe customer with the associated wallet address, and generate a Stripe checkout link to send to the frontend, as well as the endpoint that verifies if a user is subscribed.
+- [`/hooks/`](/hooks) - **Frontend Hooks** - Here you'll find the frontend hooks handling the requests made to the backend for authentication and for using Stripe checkout.
 
 ### Learn More
 
