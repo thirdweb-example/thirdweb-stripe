@@ -735,10 +735,10 @@
   resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.32.0.tgz#4ecdd298db61ad9b240622eafed58da974bd210e"
   integrity sha512-7EvBnbBfS1aynfLRmBFcuumHNGjKxnNkO47rorFBktqDYHwo7Yw6pfDW2iqq0R8r7i7XiJEdWPvvEgQAiDrx3A==
 
-"@thirdweb-dev/contracts@2.3.15-0":
-  version "2.3.15-0"
-  resolved "https://registry.yarnpkg.com/@thirdweb-dev/contracts/-/contracts-2.3.15-0.tgz#9ea4aa8500b213356acc1772c18222c8085087c0"
-  integrity sha512-hm6qK5GSp776ctXV3NeA6jvHHfkolJjTLXQ/ed9gZVBLVD5Bl1ofLRZ30wG3lf8eMMxFoJCEqOsoQlB95M+qOw==
+"@thirdweb-dev/contracts@2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/contracts/-/contracts-2.4.3.tgz#23d277729b6e267ae7340bcdd991e66b7ef45d52"
+  integrity sha512-4FdREGMxyfxBR1AJkMoeQooCwk1GKfGyvZJXvC/fVshrvxU+MbeyPcbDrCqjreJcJjsFPz1mV+mnYeRZrS6aeg==
 
 "@thirdweb-dev/react@^2":
   version "2.3.13"
@@ -752,12 +752,12 @@
     tiny-invariant "^1.2.0"
     wagmi "^0.2.28"
 
-"@thirdweb-dev/sdk@^2.3.15-1":
-  version "2.3.15-1"
-  resolved "https://registry.yarnpkg.com/@thirdweb-dev/sdk/-/sdk-2.3.15-1.tgz#1649bbb6a0d77be5a63a55b7edd41fd4a7f34d6c"
-  integrity sha512-kKSWBXA4CdGVSr9RzSSWA6Tfjhl1VKfmRfeee02A+BFEppRkSIJ9Tl+edANh8kMqqDbUECSh9dlZtRBx9jlong==
+"@thirdweb-dev/sdk@^2.3.23":
+  version "2.3.23"
+  resolved "https://registry.yarnpkg.com/@thirdweb-dev/sdk/-/sdk-2.3.23.tgz#26262c0c5a141add971f2d8c35a6ed39eace3aaf"
+  integrity sha512-UdU8U6DYvQLcBoyENxnrqaM/7o4TUW2Xr8apAFolbMN/1isq2WoLfSpmQilO9t7rHOTwTQsweIP+ZXjVYMm5kQ==
   dependencies:
-    "@thirdweb-dev/contracts" "2.3.15-0"
+    "@thirdweb-dev/contracts" "2.4.3"
     "@web-std/file" "^3.0.0"
     cbor "^8.1.0"
     cross-fetch "^3.1.5"

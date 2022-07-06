@@ -33,7 +33,7 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   // Generate an access token with the SDK using the signed payload
-  const token = await sdk.auth.generate(domain, payload);
+  const token = await sdk.auth.generateAuthToken(domain, payload);
 
   // Securely set httpOnly cookie on request to prevent XSS on frontend
   // And set path to / to enable access_token usage on all endpoints

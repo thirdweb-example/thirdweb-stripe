@@ -11,7 +11,7 @@
   "dependencies": {
     "@stripe/stripe-js": "^1.32.0",
     "@thirdweb-dev/react": "^2",
-    "@thirdweb-dev/sdk": "^2.3.15-1",
+    "@thirdweb-dev/sdk": "^2.3.23",
     "cookie": "^0.5.0",
     "ethers": "^5.6.8",
     "next": "^12.1.6",
