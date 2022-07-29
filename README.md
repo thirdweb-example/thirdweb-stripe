@@ -89,7 +89,7 @@ As previously mentioned, this project uses `wallet authentication` along with St
 
 To learn more about thirdweb and Next.js, take a look at the following resources:
 
-- [thirdweb Wallet Authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication) - learn about our wallet authentication flow
+- [thirdweb Wallet Authentication](https://portal.thirdweb.com/auth) - learn about our wallet authentication flow
 - [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
 - [thirdweb TypeScript Documentation](https://docs.thirdweb.com/typescript) - learn about our JavaScript/TypeScript SDK.
 - [thirdweb Portal](https://docs.thirdweb.com) - check our guides and development resources.
