@@ -1,7 +1,7 @@
 import { loadStripe } from "@stripe/stripe-js";
 
-export default function useStripe() {
-  async function checkout() {
+const useStripe = () => {
+  const checkout = async () => {
     const res = await fetch("/api/stripe/checkout", {
       method: "POST",
     });
@@ -13,22 +13,24 @@ export default function useStripe() {
 
     const stripe = await loadStripe(publishableKey as string, {
       apiVersion: "2020-08-27",
-    })
+    });
     await stripe?.redirectToCheckout({
       sessionId: session.id,
-    })
-  }
+    });
+  };
 
-  async function subscription() {
+  const subscription = async () => {
     const res = await fetch("/api/stripe/subscription", {
       method: "POST",
     });
     const subscriptionMessage = await res.json();
     return subscriptionMessage;
-  }
+  };
 
   return {
     checkout,
-    subscription
-  }
-}
+    subscription,
+  };
+};
+
+export default useStripe;
