@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 
+import { loadStripe } from "@stripe/stripe-js";
 import {
   ConnectWallet,
   useAddress,
@@ -9,7 +10,6 @@ import {
   useUser,
 } from "@thirdweb-dev/react";
 import { useState } from "react";
-import useStripe from "../hooks/useStripe";
 
 const Home: NextPage = () => {
   const address = useAddress();
@@ -19,11 +19,35 @@ const Home: NextPage = () => {
   const { user } = useUser();
   const [authMessage, setAuthMessage] = useState("N/A");
   const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
-  const { checkout, subscription } = useStripe();
+
+  const checkout = async () => {
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+    });
+    const session = await res.json();
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!publishableKey) {
+      throw new Error("Stripe publishable key not set");
+    }
+
+    const stripe = await loadStripe(publishableKey as string, {
+      apiVersion: "2020-08-27",
+    });
+    await stripe?.redirectToCheckout({
+      sessionId: session.id,
+    });
+  };
+
+  const subscription = async () => {
+    const res = await fetch("/api/stripe/subscription", {
+      method: "POST",
+    });
+    const subscriptionMessage = await res.json();
+    return subscriptionMessage;
+  };
 
   const checkSubscription = async () => {
     const message = await subscription();
-    console.log(message);
     setSubscriptionMessage(message);
   };
 
@@ -36,7 +60,7 @@ const Home: NextPage = () => {
       const data = await response.json();
       setAuthMessage(data.message);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

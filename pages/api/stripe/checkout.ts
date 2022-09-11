@@ -13,7 +13,6 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
   const { STRIPE_SECRET_KEY, NEXT_PUBLIC_AUTH_DOMAIN: domain } = process.env;
 
   if (!STRIPE_SECRET_KEY) {
-    console.error("Missing STRIPE_SECRET_KEY environment variable");
     return res.status(500).json({
       error: "Stripe secret key not set",
     });
@@ -26,7 +25,6 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (!domain) {
-    console.log("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable");
     return res
       .status(500)
       .send("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable");
