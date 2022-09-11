@@ -38,16 +38,11 @@ const Home: NextPage = () => {
     });
   };
 
-  const subscription = async () => {
+  const checkSubscription = async () => {
     const res = await fetch("/api/stripe/subscription", {
       method: "POST",
     });
-    const subscriptionMessage = await res.json();
-    return subscriptionMessage;
-  };
-
-  const checkSubscription = async () => {
-    const message = await subscription();
+    const message = await res.json();
     setSubscriptionMessage(message);
   };
 
@@ -97,7 +92,6 @@ const Home: NextPage = () => {
 
       <button onClick={checkout}>Subscribe</button>
       <button onClick={checkSubscription}>Check Subscription</button>
-
       <p>Subscription: {subscriptionMessage}</p>
     </div>
   );

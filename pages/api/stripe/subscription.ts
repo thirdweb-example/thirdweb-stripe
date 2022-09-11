@@ -1,4 +1,3 @@
-import { ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 import Stripe from "stripe";
 import { getUser } from "../../../auth.config";
