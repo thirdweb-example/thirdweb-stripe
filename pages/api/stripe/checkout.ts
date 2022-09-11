@@ -9,6 +9,7 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
+  const user = await getUser(req);
   const { STRIPE_SECRET_KEY, NEXT_PUBLIC_AUTH_DOMAIN: domain } = process.env;
 
   if (!STRIPE_SECRET_KEY) {
@@ -17,8 +18,6 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
       error: "Stripe secret key not set",
     });
   }
-
-  const user = await getUser(req);
 
   if (!user) {
     return res.status(401).json({
@@ -58,9 +57,9 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
   // Finally, create a new checkout session for the customer to send to the client-side
   const session = await stripe.checkout.sessions.create({
     customer: customer.id,
-    success_url: "http://localhost:3000",
+    success_url: domain,
     line_items: [{ price: process.env.STRIPE_PRICE_ID, quantity: 1 }],
-    cancel_url: "http://localhost:3000",
+    cancel_url: domain,
     mode: "subscription",
   });
 

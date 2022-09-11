@@ -14,12 +14,12 @@ import useStripe from "../hooks/useStripe";
 const Home: NextPage = () => {
   const address = useAddress();
   const disconnect = useDisconnect();
-  const { checkout, subscription } = useStripe();
   const login = useLogin();
   const logout = useLogout();
   const { user } = useUser();
-  const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
   const [authMessage, setAuthMessage] = useState("N/A");
+  const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
+  const { checkout, subscription } = useStripe();
 
   const checkSubscription = async () => {
     const message = await subscription();
