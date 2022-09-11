@@ -50,7 +50,7 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
     // Otherwise create a new customer associated with this wallet
     customer = await stripe.customers.create({
       metadata: {
-        // walletAddress: userAddress,
+        walletAddress: user?.address,
       },
     });
   }
