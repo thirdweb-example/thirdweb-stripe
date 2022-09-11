@@ -6,7 +6,6 @@ import {
   useDisconnect,
   useLogin,
   useLogout,
-  useMetamask,
   useUser,
 } from "@thirdweb-dev/react";
 import { useState } from "react";
