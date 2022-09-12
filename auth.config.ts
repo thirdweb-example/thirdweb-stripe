@@ -5,5 +5,5 @@ export const { ThirdwebAuthHandler, getUser } = ThirdwebAuth({
   // Learn how to store your private key securely:
   // https://portal.thirdweb.com/sdk/set-up-the-sdk/securing-your-private-key
   privateKey: process.env.ADMIN_PRIVATE_KEY as string,
-  domain: "thirdweb.com",
+  domain: "example.com",
 });
