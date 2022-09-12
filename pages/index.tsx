@@ -1,73 +1,87 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 
-import useAuthenticate from '../hooks/useAuthenticate';
-import { useAddress, useDisconnect, useMetamask } from '@thirdweb-dev/react';
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  ConnectWallet,
+  useAddress,
+  useDisconnect,
+  useLogin,
+  useLogout,
+  useUser,
+} from "@thirdweb-dev/react";
 import { useState } from "react";
-import useStripe from '../hooks/useStripe';
-
 
 const Home: NextPage = () => {
   const address = useAddress();
   const disconnect = useDisconnect();
-  const connectWithMetamask = useMetamask();
-  const { checkout, subscription } = useStripe();
-  const { login, authenticate, logout } = useAuthenticate();
-  
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const login = useLogin();
+  const logout = useLogout();
+  const { user } = useUser();
   const [authMessage, setAuthMessage] = useState("N/A");
   const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
 
-  const signInWithEthereum = async () => {
-    setAuthMessage("N/A");
-    await connectWithMetamask();
-    await login();
-    setIsLoggedIn(true);
-  }
-
-  const authenticatedRequest = async () => {
-    const res = await authenticate();
-    if (res.ok) {
-      const address = await res.json();
-      setAuthMessage(`Succesfully authenticated to backend with address ${address}`);
-    } else {
-      setAuthMessage(`Failed to authenticate, backend responded with ${res.status} (${res.statusText})`);
+  const checkout = async () => {
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+    });
+    const session = await res.json();
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!publishableKey) {
+      throw new Error("Stripe publishable key not set");
     }
-  }
+
+    const stripe = await loadStripe(publishableKey as string, {
+      apiVersion: "2020-08-27",
+    });
+    await stripe?.redirectToCheckout({
+      sessionId: session.id,
+    });
+  };
 
   const checkSubscription = async () => {
-    const message = await subscription();
+    const res = await fetch("/api/stripe/subscription", {
+      method: "POST",
+    });
+    const message = await res.json();
     setSubscriptionMessage(message);
-  }
+  };
 
-  const logoutWallet = async () => {
-    await logout();
-    setIsLoggedIn(false);
-    setAuthMessage("N/A");
-  }
+  const authenticatedRequest = async () => {
+    try {
+      const response = await fetch("/api/validate", {
+        method: "POST",
+      });
+
+      const data = await response.json();
+      setAuthMessage(data.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div>
       <h2>Wallet Connection - Frontend</h2>
       {address ? (
         <button onClick={disconnect}>Disconnect Wallet</button>
-        ) : (
-        <button onClick={connectWithMetamask}>Connect Wallet</button>
+      ) : (
+        <ConnectWallet />
       )}
       <p>Connected Address: {address || "N/A"}</p>
 
       <h2>Authentication - Backend</h2>
-      
+
       {address ? (
         <>
-          {isLoggedIn ? (
-            <button onClick={logoutWallet}>Logout</button>
+          {user ? (
+            <button onClick={logout}>Logout</button>
           ) : (
-            <button onClick={signInWithEthereum}>Login with Wallet</button>
+            <button onClick={() => login()}>Login with Wallet</button>
           )}
-          
+
           <button onClick={authenticatedRequest}>Authenticate</button>
 
-          <p>Logged In Address: {isLoggedIn ? address : "N/A"}</p>
+          <p>Logged In Address: {user ? user.address : "N/A"}</p>
           <p>Authentication: {authMessage}</p>
         </>
       ) : (
@@ -78,7 +92,6 @@ const Home: NextPage = () => {
 
       <button onClick={checkout}>Subscribe</button>
       <button onClick={checkSubscription}>Check Subscription</button>
-
       <p>Subscription: {subscriptionMessage}</p>
     </div>
   );
