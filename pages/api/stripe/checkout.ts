@@ -31,7 +31,7 @@ const checkout = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const stripe = new Stripe(STRIPE_SECRET_KEY, {
-    apiVersion: "2022-08-01",
+    apiVersion: "2022-11-15",
   });
 
   // Check for stripe customers already associated with authenticated wallet address
