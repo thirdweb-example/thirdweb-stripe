@@ -9,7 +9,8 @@ const subscription = async (req: NextApiRequest, res: NextApiResponse) => {
     });
   }
 
-  const { STRIPE_SECRET_KEY, NEXT_PUBLIC_AUTH_DOMAIN: domain } = process.env;
+  const { STRIPE_SECRET_KEY, NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN: domain } =
+    process.env;
   if (!STRIPE_SECRET_KEY) {
     return res.status(500).json({
       error: "Stripe secret key not set",
@@ -27,7 +28,7 @@ const subscription = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!domain) {
     return res
       .status(500)
-      .send("Missing NEXT_PUBLIC_AUTH_DOMAIN environment variable");
+      .send("Missing NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN environment variable");
   }
 
   const stripe = new Stripe(STRIPE_SECRET_KEY, {

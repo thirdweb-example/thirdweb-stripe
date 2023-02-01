@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       desiredChainId={activeChainId}
       authConfig={{
         authUrl: "/api/auth",
-        domain: process.env.NEXT_PUBLIC_AUTH_DOMAIN as string,
+        domain: process.env.NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN as string,
       }}
     >
       <Component {...pageProps} />

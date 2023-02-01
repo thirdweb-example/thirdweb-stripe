@@ -1,8 +1,8 @@
 ## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [wallet authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication) and [Stripe](https://stripe.com). 
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [wallet authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication) and [Stripe](https://stripe.com).
 
-It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access. 
+It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access.
 
 Below is a visual breakdown and explanation of how the whole flow works:
 
@@ -24,16 +24,16 @@ npm install
 yarn install
 ```
 
-Next, you need to create a `.env.local` file and add the `ADMIN_PRIVATE_KEY` variable to it with the private key of the wallet you want to use as the admin wallet to generate and verify payloads. Your file should use something like the following:
+Next, you need to create a `.env.local` file and add the `THIRDWEB_AUTH_PRIVATE_KEY` variable to it with the private key of the wallet you want to use as the admin wallet to generate and verify payloads. Your file should use something like the following:
 
 ```.env
-ADMIN_PRIVATE_KEY=...
+THIRDWEB_AUTH_PRIVATE_KEY=...
 ```
 
-Since we are using the `thirdweb authentication` flow, we'll also need to specify a domain in our environment variables for both our client and server sides to use. This domain should be the url of your client side application and is used to prevent phishing attacks. We can add it to the `NEXT_PUBLIC_AUTH_DOMAIN` variable in our `.env.local` file.
+Since we are using the `thirdweb authentication` flow, we'll also need to specify a domain in our environment variables for both our client and server sides to use. This domain should be the url of your client side application and is used to prevent phishing attacks. We can add it to the `NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN` variable in our `.env.local` file.
 
 ```.env
-NEXT_PUBLIC_AUTH_DOMAIN=...
+NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN=...
 ```
 
 Finally, you can run the project with one of the following commands:
