@@ -1,8 +1,8 @@
 ## Thirdweb Stripe
 
-This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [wallet authentication](https://portal.thirdweb.com/advanced-features/wallet-authentication) and [Stripe](https://stripe.com). 
+This project demonstrates an example flow for setting up subscription based payments for web3 apps using thirdweb [auth](https://portal.thirdweb.com/auth) and [Stripe](https://stripe.com).
 
-It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access. 
+It enables traditional SaaS business models for web3 apps where products can offer protected services that require subscriptions to access.
 
 Below is a visual breakdown and explanation of how the whole flow works:
 
@@ -12,7 +12,7 @@ This is an example of the power that the wallet authentication flow offers for w
 
 ## Runnning the Example
 
-In order to run this example project, we'll need to setup a few pieces. First, we'll need to store environment variables for the admin wallet to use for authentication on the backend (to learn more about how wallet authentication works, you can checkout the [Wallet Authentication Documentation](https://portal.thirdweb.com/advanced-features/wallet-authentication)). Additionally, we'll need to setup a Stripe account and configure a product on the Stripe dashboard to use for our subscription.
+In order to run this example project, we'll need to setup a few pieces. First, we'll need to store environment variables for the admin wallet to use for authentication on the backend (to learn more about how wallet authentication works, you can checkout the [Auth Documentation](https://portal.thirdweb.com/auth)). Additionally, we'll need to setup a Stripe account and configure a product on the Stripe dashboard to use for our subscription.
 
 ### Setup Thirdweb
 
@@ -24,16 +24,16 @@ npm install
 yarn install
 ```
 
-Next, you need to create a `.env.local` file and add the `ADMIN_PRIVATE_KEY` variable to it with the private key of the wallet you want to use as the admin wallet to generate and verify payloads. Your file should use something like the following:
+Next, you need to create a `.env.local` file and add the `THIRDWEB_AUTH_PRIVATE_KEY` variable to it with the private key of the wallet you want to use as the admin wallet to generate and verify payloads. Your file should use something like the following:
 
 ```.env
-ADMIN_PRIVATE_KEY=...
+THIRDWEB_AUTH_PRIVATE_KEY=...
 ```
 
-Since we are using the `thirdweb authentication` flow, we'll also need to specify a domain in our environment variables for both our client and server sides to use. This domain should be the url of your client side application and is used to prevent phishing attacks. We can add it to the `NEXT_PUBLIC_AUTH_DOMAIN` variable in our `.env.local` file.
+Since we are using the `thirdweb authentication` flow, we'll also need to specify a domain in our environment variables for both our client and server sides to use. This domain should be the url of your client side application and is used to prevent phishing attacks. We can add it to the `NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN` variable in our `.env.local` file.
 
 ```.env
-NEXT_PUBLIC_AUTH_DOMAIN=...
+NEXT_PUBLIC_THIRDWEB_AUTH_DOMAIN=...
 ```
 
 Finally, you can run the project with one of the following commands:
@@ -75,7 +75,7 @@ STRIPE_PRICE_ID=...
 
 **3. Subscribing**
 
-Now everything we need is setup to use our application. We can run `yarn dev` or `npm run dev` to start the application and then navigate to `localhost:3000`. From here, we can connect our wallet, login, and then click the subcribe button to subscribe to our product and go through stripes flow. Once we are redirected back to the original page, we can verify that the subscription was created successfully by clicking the check subcription button, and the subscription should also show up in the Stripe dashboard.
+Now everything we need is setup to use our application. We can run `yarn dev` or `npm run dev` to start the application and then navigate to `localhost:3000`. From here, we can connect our wallet, login, and then click the subscribe button to subscribe to our product and go through stripes flow. Once we are redirected back to the original page, we can verify that the subscription was created successfully by clicking the check subscription button, and the subscription should also show up in the Stripe dashboard.
 
 ## Browse the Source Code
 
@@ -83,13 +83,12 @@ As previously mentioned, this project uses `wallet authentication` along with St
 
 - [`/pages/api/auth`](/pages/api/auth) - **Wallet Authentication** - This folder contains all the code used for authenticating a wallet to the backend. Users can login to the backend by using the `/api/auth/login` endpoint which verifies their wallet address and issues a secure cookie to the frontend which is used to authenticate the user on all future requests. Every other endpoint checks for and validates this cookie to make sure that the user is logged in.
 - [`/pages/api/stripe`](/pages/api/stripe) - **Stripe Payments** - This folder contains the backend endpoints that authenticate the connected user, create a new Stripe customer with the associated wallet address, and generate a Stripe checkout link to send to the frontend, as well as the endpoint that verifies if a user is subscribed.
-- [`/hooks`](/hooks) - **Frontend Hooks** - Here you'll find the frontend hooks handling the requests made to the backend for authentication and for using Stripe checkout.
 
 ### Learn More
 
 To learn more about thirdweb and Next.js, take a look at the following resources:
 
-- [thirdweb Wallet Authentication](https://portal.thirdweb.com/auth) - learn about our wallet authentication flow
+- [thirdweb Auth](https://portal.thirdweb.com/auth) - learn about our wallet authentication flow
 - [thirdweb React Documentation](https://docs.thirdweb.com/react) - learn about our React SDK.
 - [thirdweb TypeScript Documentation](https://docs.thirdweb.com/typescript) - learn about our JavaScript/TypeScript SDK.
 - [thirdweb Portal](https://docs.thirdweb.com) - check our guides and development resources.

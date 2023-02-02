@@ -1,21 +1,18 @@
 import type { NextPage } from "next";
-
 import { loadStripe } from "@stripe/stripe-js";
 import {
   ConnectWallet,
   useAddress,
-  useDisconnect,
   useLogin,
   useLogout,
   useUser,
 } from "@thirdweb-dev/react";
 import { useState } from "react";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
   const address = useAddress();
-  const disconnect = useDisconnect();
-  const login = useLogin();
-  const logout = useLogout();
+  const { logout } = useLogout();
   const { user } = useUser();
   const [authMessage, setAuthMessage] = useState("N/A");
   const [subscriptionMessage, setSubscriptionMessage] = useState("N/A");
@@ -60,38 +57,46 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <h2>Wallet Connection - Frontend</h2>
-      {address ? (
-        <button onClick={disconnect}>Disconnect Wallet</button>
+
+      {user ? (
+        <button className={styles.mainButton} onClick={() => logout()}>
+          Logout
+        </button>
       ) : (
         <ConnectWallet />
       )}
+
       <p>Connected Address: {address || "N/A"}</p>
 
       <h2>Authentication - Backend</h2>
 
       {address ? (
-        <>
-          {user ? (
-            <button onClick={logout}>Logout</button>
-          ) : (
-            <button onClick={() => login()}>Login with Wallet</button>
-          )}
-
-          <button onClick={authenticatedRequest}>Authenticate</button>
+        <div>
+          <button className={styles.mainButton} onClick={authenticatedRequest}>
+            Authenticate
+          </button>
 
           <p>Logged In Address: {user ? user.address : "N/A"}</p>
           <p>Authentication: {authMessage}</p>
-        </>
+        </div>
       ) : (
-        <>Connect your wallet to access authentication.</>
+        <p>Connect your wallet to access authentication.</p>
       )}
 
       <h2>Payments - Stripe</h2>
 
-      <button onClick={checkout}>Subscribe</button>
-      <button onClick={checkSubscription}>Check Subscription</button>
+      <button className={styles.mainButton} onClick={checkout}>
+        Subscribe
+      </button>
+      <button
+        className={styles.mainButton}
+        onClick={checkSubscription}
+        style={{ marginTop: "10px" }}
+      >
+        Check Subscription
+      </button>
       <p>Subscription: {subscriptionMessage}</p>
     </div>
   );
